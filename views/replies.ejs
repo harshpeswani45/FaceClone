@@ -1,0 +1,11 @@
+<ul>
+        <%for(var i=0 ;i<data2.length;i++){
+            %>
+            <li> <%=data2[i].user.name%></li>
+            <li> <%=data2[i].reply%> <%=data2[i].Date%>  <%if(username == data2[i].user.name || username == name){%><a onclick="onDeleteReply('<%=data2[i]._id%>','<%=commentid%>')">[delete]</a><%}%></li>
+            
+            <%}%>
+            
+                <textarea id="<%=commentid%>reply1"></textarea> <button onclick="onAddReply('<%=commentid%>')">Add Reply</button>
+            
+    </ul>

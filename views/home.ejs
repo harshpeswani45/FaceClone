@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FaceClone</title>
+
+  <link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+<script>
+  function onLike(postid,username){
+        
+        var change = document.getElementById(postid+'like')
+        if(change.innerHTML == "[Unlike]"){
+            decision = "unlike"
+            change.innerHTML = "[Like]"
+            document.getElementById(postid+'count').innerHTML = document.getElementById(postid+'count').innerHTML*1-1
+        }
+        else{
+          decision = "like"
+          change.innerHTML = "[Unlike]"
+          document.getElementById(postid+'count').innerHTML = document.getElementById(postid+'count').innerHTML*1+1
+        }
+          
+        
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/like/"+postid+"/"+username+"/"+decision
+        
+        xhttp.open('PUT', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              
+            }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send();
+
+      }
+      function onComment(postid,username){
+        var count =0
+        if(count == 1){
+          document.getElementById(postid+'comment').style.visibility="hidden"
+          //count =0
+        }
+        else{
+          //count =1
+          document.getElementById(postid+'comment').style.visibility="visible"
+        }
+
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/showcomments/"+postid        
+        xhttp.open('GET', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              var change = document.getElementById(postid+'comment')
+              if(count % 2==0)
+                change.innerHTML=this.responseText
+              else
+                change.innerHTML = ""
+             
+            }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send();
+
+        
+      }
+      function onAddComment(postid){
+        var comment = document.getElementById(postid+'comments').value
+        
+  
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/addcomment/"+postid        
+        xhttp.open('POST', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              var change = document.getElementById(postid+'comment')
+             
+                change.innerHTML=this.responseText
+                    }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send('comment='+comment);
+
+        
+      
+      }
+      function onReply(commentid,username){
+        var count =0
+        if(count == 1){
+          document.getElementById(commentid+'reply').style.visibility="hidden"
+          //count =0
+        }
+        else{
+          //count =1
+          document.getElementById(commentid+'reply').style.visibility="visible"
+        }
+
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/showreplies/"+commentid        
+        xhttp.open('GET', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              var change = document.getElementById(commentid+'reply')
+              change.innerHTML = this.responseText
+             
+            }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send();
+
+        
+      }
+      function onAddReply(commentid){
+        
+        var reply = document.getElementById(commentid+'reply1').value
+        console.log(reply)
+  
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/addreply/"+commentid        
+        xhttp.open('POST', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              
+              var change = document.getElementById(commentid+'reply')
+              change.innerHTML = this.responseText
+                    }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send('reply='+reply);
+
+        
+      
+      }
+      function onDeleteReply(replyid,commentid){
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/deletereply/"+replyid+"/"+commentid        
+        xhttp.open('GET', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              
+              var change = document.getElementById(commentid+'reply')
+              change.innerHTML = this.responseText
+                    }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send();
+
+      }
+      function onDeleteComment(commentid,postid){
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/deletecomment/"+commentid+"/"+postid        
+        xhttp.open('GET', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              
+              var change = document.getElementById(postid+'comment')
+              change.innerHTML = this.responseText
+                    }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        xhttp.send();
+
+      }
+      function onDeletePost(postid){
+        let xhttp = new XMLHttpRequest();
+        let url = "/users/deletepost/"+postid        
+        xhttp.open('GET', url, true);
+        xhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+        xhttp.onreadystatechange = function() {
+          if (this.readyState == 4 ){
+            if(this.status==200){
+              
+              
+                    }
+              
+            else
+              alert(`status : ${this.status} error: ${this.responseText}`);
+            
+          }
+        };
+        location.reload()
+        xhttp.send();
+
+      }
+      
+</script>
+<h1><%=text%></h1>
+  <!-- nav -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="/users">FaceClone</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/users">Home</a></li>
+        
+        <li><a href="/logouts">Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+  <!-- ./nav -->
+
+  <!-- main -->
+  <main class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <!-- profile brief -->
+        
+        <!-- ./profile brief -->
+
+        <!-- friend requests -->
+        
+        <!-- ./friend requests -->
+      </div>
+      <div class="col-md-6">
+        <!-- post form -->
+        <form method="post" action="/users/createPost" enctype="multipart/form-data">
+          <div class="input-group">
+            <input type="file" name="image" placeholder="Make a post...">
+            <span class="input-group-btn">
+              <button class="btn btn-success" type="submit">Post</button>
+            </span>
+          </div>
+        </form><hr>
+        <!-- ./post form -->
+
+        <!-- feed -->
+        
+        <div>
+          <!-- post -->
+         <%for(var i=0 ; i<data.length;i++){
+            
+            
+            %>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <img width="50" height="50" src = "<%=data[i].imagePath%>">
+            </div>
+            <div class="panel-footer">
+              <span>posted <%=data[i].Date%> by <%=data[i].user.name%></span>
+              <%var a = data[i].like.find(function(element){
+                return element == username
+              })
+                if( a == undefined){%>
+              <span class="pull-right"><a class="text-danger"  id ='<%=data[i]._id%>like' onclick="onLike('<%=data[i]._id%>','<%=username%>')">[Like]</a ><a id='<%=data[i]._id%>count'> <%=data[i].like.length%></a></span>
+               <% } else{%>
+                
+              <span class="pull-right"><a class="text-danger"  id ='<%=data[i]._id%>like' onclick="onLike('<%=data[i]._id%>','<%=username%>')">[Unlike]</a ><a id='<%=data[i]._id%>count'> <%=data[i].like.length%></a></span>
+              <%}%>
+              <span class="pull-right"><a class="text-danger" onclick="onComment('<%=data[i]._id%>','<%=username%>')" >[Comment]</a></span>
+              <%if(username == data[i].user.name){%> 
+              <span class="pull-right"><a class="text-danger" onclick="onDeletePost('<%=data[i]._id%>')">[delete]</a></span>
+              <%}%>
+            </div>
+          </div>
+          <div id = '<%=data[i]._id%>comment'>
+
+          </div>
+          <%}%>        <!-- ./post -->
+        </div>
+        <!-- ./feed -->
+      </div>
+      <div class="col-md-3">
+      <!-- add friend -->
+        
+        <!-- ./add friend -->
+
+        <!-- friends -->
+        
+        <!-- ./friends -->
+      </div>
+    </div>
+  </main>
+  <!-- ./main -->
+
+  <!-- footer -->
+  <footer class="container text-center">
+    <ul class="nav nav-pills pull-right">
+      <li>FaceClone - Made by Harsh Peswani</li>
+    </ul>
+  </footer>
+  <!-- ./footer -->
+  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="/js/script.js"></script>
+</body>
+</html>
