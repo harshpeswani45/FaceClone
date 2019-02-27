@@ -15,4 +15,5 @@ router.get('/deletereply/:replyid/:commentid',controller.deleteReply)
 router.get('/deletecomment/:commentid/:postid',controller.deleteComment)
 router.get('/deletepost/:postid',controller.deletePost)
 
+
 module.exports = router;

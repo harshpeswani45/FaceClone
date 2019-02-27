@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema({
     comment: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comments1'
+        ref: 'Comments2'
     },
     reply: {
         type: String
@@ -13,7 +13,7 @@ const schema = mongoose.Schema({
     },
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserInfo1'
+        ref: 'UserInfo2'
     }
 });
-module.exports = mongoose.model("Reply1", schema);
+module.exports = mongoose.model("Reply2", schema);

@@ -10,7 +10,7 @@ const schema = mongoose.Schema({
     },
     posts: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Post1'
+        ref: 'Post2'
     }]
 });
-module.exports = mongoose.model("UserInfo1", schema);
+module.exports = mongoose.model("UserInfo2", schema);

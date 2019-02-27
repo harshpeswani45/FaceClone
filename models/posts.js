@@ -2,11 +2,11 @@ const mongoose = require("mongoose");
 const schema = mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'UserInfo1'
+        ref: 'UserInfo2'
     },
     comments: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Comments1'
+        ref: 'Comments2'
     }],
     imagePath: {
         type: String
@@ -19,4 +19,4 @@ const schema = mongoose.Schema({
         type: String
     }]
 });
-module.exports = mongoose.model("Post1", schema);
+module.exports = mongoose.model("Post2", schema);

@@ -6,10 +6,11 @@ module.exports = function(req,res){
     var imgname
     var image = req.files.image
     if(image == undefined){
-        model.posts.find({},function(err,result){
+        model.posts.find({}).populate('user').exec(function(err,result){
             if(err)
                 res.render('error',{err :err})
             else{
+                console.log(result)
                 res.render('home',{text : 'please enter valid image',data:result,username : req.session.username})        
             }
     })
@@ -17,13 +18,14 @@ module.exports = function(req,res){
     }
     else{
         if ((path.extname(image.name).toLowerCase() != ".png") && (path.extname(image.name).toLowerCase() != ".jpg")){
-            model.posts.find({},function(err,result){
+            model.posts.find({}).populate('user').exec(function(err,result){
                 if(err)
                     res.render('error',{err :err})
                 else{
+                    console.log(result)
                     res.render('home',{text : 'please enter valid image',data:result,username : req.session.username})        
-                }        
-            })
+                }
+        })
             }
         else{
         
